@@ -1,0 +1,7 @@
+Feature: Register
+
+	Scenario: Testing the authentication register
+		Given User go to login page
+		When User input username password and click login
+		And User input username email password and click register
+		

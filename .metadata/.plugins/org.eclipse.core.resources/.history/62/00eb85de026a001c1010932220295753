@@ -1,0 +1,11 @@
+Feature: Posts
+
+	Scenario: Testing add posts
+		Given User go to dashboard
+		When Click button menu posts
+		And Click button add new 
+		And User input title and input type
+		And Click button publish
+		And Click view posts
+		Then User can add posts
+		

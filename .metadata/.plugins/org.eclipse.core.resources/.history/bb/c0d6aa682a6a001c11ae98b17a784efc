@@ -1,0 +1,7 @@
+Feature: Add to chart
+
+  @tag1
+  Scenario: Title of your scenario
+    Given Back to home page
+    When Select one shoes from compare product
+    And Select one glass from search

@@ -1,0 +1,160 @@
+package sqademo.glue;
+
+import static org.junit.Assert.assertEquals;
+
+import org.openqa.selenium.WebDriver;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+
+
+import com.relevantcodes.extentreports.ExtentReports;
+import com.relevantcodes.extentreports.ExtentTest;
+import com.relevantcodes.extentreports.LogStatus;
+
+import io.cucumber.spring.CucumberContextConfiguration;
+import sqademo.config.AutomationFrameworkConfiguration;
+import sqademo.driver.DriverSingleton;
+import sqademo.pages.LoginPage;
+import sqademo.pages.MediaPage;
+import sqademo.pages.Posts;
+import sqademo.utils.ConfigurationProperties;
+import sqademo.utils.Constants;
+import sqademo.utils.Log;
+import sqademo.utils.TestCases;
+import sqademo.utils.Utils;
+import io.cucumber.java.After;
+import io.cucumber.java.Before;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
+
+@CucumberContextConfiguration
+@ContextConfiguration(classes = AutomationFrameworkConfiguration.class)
+public class StepDefinition {
+
+	private WebDriver driver;
+	private LoginPage loginPage;
+	private Posts posts;
+	private MediaPage mediaPage;
+	ExtentTest extentTest;
+	static ExtentReports report = new ExtentReports("src/main/resources/Report.html");
+	
+	@Autowired
+	ConfigurationProperties configurationProperties;
+	
+	@Before
+	public void initializeObjects() {
+		DriverSingleton.getInstance(configurationProperties.getBrowser());
+		loginPage = new LoginPage();
+		posts = new Posts();
+		mediaPage = new MediaPage();
+		TestCases[] tests = TestCases.values();
+		extentTest = report.startTest(tests[Utils.testCount].getTestName());
+		Log.getLogData(Log.class.getName());
+		Log.startTest(tests[Utils.testCount].getTestName());
+		Utils.testCount++;
+	}
+	
+	@Given("User go to the website")
+	public void user_go_to_the_Website() {
+		driver = DriverSingleton.getDriver();
+		driver.get(Constants.URL);
+		Log.info("INFO: Navigating to "+ Constants.URL);
+		extentTest.log(LogStatus.PASS, "Navigating to "+ Constants.URL);
+	}
+	
+	@When("Click button login Page")
+	public void click_button_login_Page() {
+		loginPage.gotoLoginPage();
+		extentTest.log(LogStatus.PASS, "Click button login Page");
+	}
+	
+	@When("User input username password and click Login")
+	public void  User_input_username_password_and_click_Login() {
+		loginPage.inputLogin(configurationProperties.getUsername(), configurationProperties.getPassword());
+		extentTest.log(LogStatus.PASS, "User input username password and click Login");
+	}
+	
+	@Then("User can login to the Website")
+	public void user_can_login_to_the_Website() {
+		assertEquals(configurationProperties.getDisplayName(), loginPage.getDisplayname());
+		extentTest.log(LogStatus.PASS, "User can login to the Website");
+	}
+
+	///////////// POSTS ///////////////////
+	
+	@Given("User go to dashboard")
+	public void User_go_to_dashboard() {
+		posts.gotoDashboardPage();
+		extentTest.log(LogStatus.PASS, "User go to dashboard");
+	}
+	
+	@When("Click button menu posts")
+	public void Click_button_menu_posts() {
+		posts.gotoPostPage();
+		extentTest.log(LogStatus.PASS, "Click button menu posts" );
+	}
+	
+	@When("Click button add new")
+	public void Click_button_add_new() {
+		posts.addNew();
+		extentTest.log(LogStatus.PASS, "Click button add new");
+	}
+	
+	@When("User input title and input type")
+	public void User_input_title_and_input_type() {
+		posts.inputPost(configurationProperties.getTitle(), configurationProperties.getType());
+		extentTest.log(LogStatus.PASS, "User input title and input type");
+	}
+	
+	@When("Click button publish")
+	public void Click_button_publish() {
+		posts.btnPublish();
+		extentTest.log(LogStatus.PASS, "Click button publish");
+	}
+	
+	@When("Click view posts")
+	public void Click_view_posts() {
+		posts.gotoViewPosts();
+		extentTest.log(LogStatus.PASS, "Click view posts");
+	}
+	
+	@Then("User can add posts")
+	public void User_can_add_posts( ) {
+		assertEquals(configurationProperties.getGetTitle(), posts.getTitleName());
+		extentTest.log(LogStatus.PASS, "User can add postsUser can add posts");
+	}
+	
+	/////// MEDIA ////////////////
+	
+	@Given("User go to dashboard media")
+	public void User_go_to_dashboard_media() {
+		mediaPage.gotoDashboard();
+		extentTest.log(LogStatus.PASS, "User go to dashboard media");
+	}
+	
+	@When("Click button menu media")
+	public void Click_button_menu_media() {
+		mediaPage.gotoMedia();
+		extentTest.log(LogStatus.PASS, "Click button menu media");
+	}
+	
+	@When("Click button add new media")
+	public void Click_button_add_new_media() {
+		mediaPage.btnAddNew();
+		extentTest.log(LogStatus.PASS, "Click button add new media");
+	}
+	
+	@When("User select files")
+	public void User_select_files() {
+		mediaPage.uploadFile(configurationProperties.getFileUpload());
+		extentTest.log(LogStatus.PASS, "User select files");
+	}
+	
+	@After
+	public void closeObject() {
+		report.endTest(extentTest);
+		report.flush();
+	}
+	
+}

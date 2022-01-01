@@ -1,0 +1,73 @@
+package sqademo.glue;
+
+import static org.junit.Assert.assertEquals;
+
+import org.openqa.selenium.WebDriver;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+
+
+import com.relevantcodes.extentreports.ExtentReports;
+import com.relevantcodes.extentreports.ExtentTest;
+import com.relevantcodes.extentreports.LogStatus;
+
+import io.cucumber.spring.CucumberContextConfiguration;
+import sqademo.config.AutomationFrameworkConfiguration;
+import sqademo.driver.DriverSingleton;
+import sqademo.pages.Register;
+import sqademo.utils.ConfigurationProperties;
+import sqademo.utils.Constants;
+import sqademo.utils.TestCases;
+import sqademo.utils.Utils;
+import io.cucumber.java.After;
+import io.cucumber.java.Before;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
+
+@CucumberContextConfiguration
+@ContextConfiguration(classes = AutomationFrameworkConfiguration.class)
+public class StepDefinition {
+
+	private WebDriver driver;
+	private Register register;
+	ExtentTest extentTest;
+	static ExtentReports report = new ExtentReports("src/main/resources/Report.html");
+	
+	@Autowired
+	ConfigurationProperties configurationProperties;
+	
+	@Before
+	public void initializeObjects() {
+		DriverSingleton.getInstance(configurationProperties.getBrowser());
+		register = new Register();
+		TestCases[] tests = TestCases.values();
+		extentTest = report.startTest(tests[Utils.testCount].getTestName());
+		Utils.testCount++;
+	}
+	
+	@Given("User go to the website")
+	public void User_go_to_the_Website() {
+		driver = DriverSingleton.getDriver();
+		driver.get(Constants.URL);
+		extentTest.log(LogStatus.PASS, "Navigating to "+ Constants.URL);
+	}
+	
+	@When("Click button my account page")
+	public void Click_button_my_account_page() {
+		register.gotoMyAccount();
+		extentTest.log(LogStatus.PASS, "Click button my account page");
+	}
+	
+	@When("Click button my account page")
+	public void Click_button_my_account_page() {
+		register.gotoMyAccount();
+	}
+	
+	@After
+	public void closeObject() {
+		report.endTest(extentTest);
+		report.flush();
+	}
+	
+}

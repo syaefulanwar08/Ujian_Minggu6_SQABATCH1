@@ -1,0 +1,69 @@
+package sqademo.utils;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Component;
+
+@Component
+@PropertySource("framework.properties")
+public class ConfigurationProperties {
+	
+	@Value("${browser}")
+	private String browser;
+	
+	@Value("${inputUsername}")
+	private String username;
+
+	@Value("${inputPassword}")
+	private String password;
+	
+	@Value("${displayName}")
+	private String displayName;
+	
+	@Value("${inputTitle}")
+	private String title;
+	
+	@Value("${inputType}")
+	private String type;
+	
+	@Value("${getTitle}")
+	private String getTitle;
+	
+	@Value("${getFile}")
+	private String file;
+
+	public String getFileUpload() {
+		return file;
+	}
+
+	public String getGetTitle() {
+		return getTitle;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public String getBrowser() {
+		return browser;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public String getDisplayName() {
+		return displayName;
+	}
+	
+	
+	
+}

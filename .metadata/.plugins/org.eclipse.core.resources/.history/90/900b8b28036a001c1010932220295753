@@ -1,0 +1,8 @@
+Feature: Register
+
+	Scenario: Testing the authentication register
+		Given User go to the website
+		When Click button my account page
+		And User input username password and click Login
+		Then User can login to the Website
+		

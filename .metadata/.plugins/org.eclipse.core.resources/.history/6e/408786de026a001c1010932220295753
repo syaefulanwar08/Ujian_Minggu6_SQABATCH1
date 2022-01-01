@@ -1,0 +1,7 @@
+Feature: Media
+
+	Scenario: Testing add media
+		Given User go to dashboard media
+		When Click button menu media
+		And Click button add new media
+		And User select files

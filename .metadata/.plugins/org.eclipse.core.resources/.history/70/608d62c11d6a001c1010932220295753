@@ -1,0 +1,6 @@
+Feature: Login
+
+	Scenario: Testing the authentication login
+		Given User go to login page
+		When User input username password and click login
+		

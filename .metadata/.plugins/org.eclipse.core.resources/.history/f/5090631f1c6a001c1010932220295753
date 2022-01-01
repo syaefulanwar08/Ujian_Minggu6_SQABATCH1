@@ -1,0 +1,19 @@
+package sqademo.utils;
+
+public enum TestCases {
+
+	T1("Testing the authentication"),
+	T2("Testing add posts");
+	
+	private String testName;
+
+	private TestCases(String values) {
+		// TODO Auto-generated constructor stub
+		this.testName = values;
+	}
+
+	public String getTestName() {
+		return testName;
+	}
+	
+}

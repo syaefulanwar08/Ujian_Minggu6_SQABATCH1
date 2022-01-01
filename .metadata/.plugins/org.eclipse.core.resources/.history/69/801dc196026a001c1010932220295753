@@ -1,0 +1,78 @@
+package sqademo.pages;
+
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+
+import sqademo.driver.DriverSingleton;
+
+public class Posts {
+	
+	private WebDriver driver;
+	
+	public Posts() {
+		driver = DriverSingleton.getDriver();
+		PageFactory.initElements(driver, this);
+	}
+	
+	@FindBy(xpath = "//li[@id='wp-admin-bar-site-name']/a[@class='ab-item']")
+	private WebElement gotoDashboard;
+	
+	@FindBy(xpath = "//ul[@id='adminmenu']/li[3]/a")
+	private WebElement gotoPosts;
+	
+	@FindBy(xpath = "//a[@class='page-title-action']")
+	private WebElement btnAddNew;
+	
+	@FindBy(id = "post-title-0")
+	private WebElement inputTitle;
+	
+	@FindBy(xpath = "//div[@class='block-editor-block-list__layout is-root-container']/p/span")
+	private WebElement inputType;
+	
+	@FindBy(xpath = "//button[@class='components-button editor-post-publish-panel__toggle editor-post-publish-button__button is-primary']")
+	private WebElement btnPublish1;
+	
+	@FindBy(xpath = "//button[@class='components-button editor-post-publish-button editor-post-publish-button__button is-primary']")
+	private WebElement btnPublish2;
+	
+	@FindBy(xpath = "//a[@class='components-button is-secondary']")
+	private WebElement btnViewPosts;
+	
+	@FindBy(xpath = "//h2[@class='entry-title default-max-width']")
+	private WebElement getTitle;
+	
+	public void gotoDashboardPage() {
+		gotoDashboard.click();
+	}
+	
+	public void gotoPostPage() {
+		gotoPosts.click();
+	}
+	
+	public void addNew() {
+		btnAddNew.click();
+	}
+	
+	public void inputPost(String title, String type) {
+		inputTitle.sendKeys(title, Keys.TAB, type);
+//		inputType.click();
+//		inputType.sendKeys(type);
+	}
+	
+	public void btnPublish() {
+		btnPublish1.click();
+		btnPublish2.click();
+	}
+	
+	public void gotoViewPosts() {
+		btnViewPosts.click();
+	}
+	
+	public String getTitleName() {
+		return getTitle.getText();
+	}
+	
+}

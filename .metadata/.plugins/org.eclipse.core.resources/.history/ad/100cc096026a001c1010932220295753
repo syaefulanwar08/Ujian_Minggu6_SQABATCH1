@@ -1,0 +1,63 @@
+package sqademo.pages;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+
+import sqademo.driver.DriverSingleton;
+
+public class MediaPage {
+
+private WebDriver driver;
+	
+	public MediaPage() {
+		driver = DriverSingleton.getDriver();
+		PageFactory.initElements(driver, this);
+	}
+	
+	@FindBy(xpath = "//li[@id='wp-admin-bar-site-name']/a[@class='ab-item']")
+	private WebElement gotoDashboard;
+	
+	@FindBy(xpath = "//a[@class='wp-has-submenu wp-not-current-submenu menu-top menu-icon-media']")
+	private WebElement gotoMedia;
+	
+	@FindBy(xpath = "//a[@class='page-title-action']")
+	private WebElement btnAddNew;
+	
+	@FindBy(id = "async-upload")
+	private WebElement btnChooseFile;
+	
+	@FindBy(id = "html-upload")
+	private WebElement btnUpload;
+	
+//	@FindBy(id = "//ul[@id='__attachments-view-47']/li[@aria-label='cat']")
+//	private WebElement getFile;
+	
+	
+	public void gotoDashboard() {
+		gotoDashboard.click();
+	}
+	
+	public void gotoMedia() {
+		gotoMedia.click();
+	}
+	
+	public void btnAddNew() {
+		btnAddNew.click();
+	}
+	
+	public void uploadFile(String file) {
+		Actions act = new Actions(driver);
+		act.moveToElement(btnChooseFile).perform();
+		
+		btnChooseFile.sendKeys(file);
+		btnUpload.click();
+	}
+	
+//	public String getFile() {
+//		return getFile().ge;
+//	}
+}

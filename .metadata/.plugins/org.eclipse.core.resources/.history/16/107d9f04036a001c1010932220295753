@@ -1,0 +1,8 @@
+Feature: Login
+
+	Scenario: Testing the authentication
+		Given User go to the website
+		When Click button login Page
+		And User input username password and click Login
+		Then User can login to the Website
+		

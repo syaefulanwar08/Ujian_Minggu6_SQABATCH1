@@ -1,0 +1,16 @@
+package sqademo.pages;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.PageFactory;
+
+import sqademo.driver.DriverSingleton;
+
+public class Register {
+
+private WebDriver driver;
+	
+	public Register() {
+		driver = DriverSingleton.getDriver();
+		PageFactory.initElements(driver, this);
+	}
+}

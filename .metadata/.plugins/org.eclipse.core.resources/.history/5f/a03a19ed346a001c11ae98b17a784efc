@@ -1,0 +1,12 @@
+Feature: Add to chart
+
+  @tag1
+  Scenario: Add to chart shoes and glass
+    Given Back to home page
+    When Search shoes 
+    And Choose color and size 
+    And Click buton add to chart
+    When Search glass 
+    And Click glass product
+    And Choose color and size 
+    And Click buton add to chart
